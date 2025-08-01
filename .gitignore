@@ -51,4 +51,8 @@ node_modules/
 
 # Backup files
 *.bak
-*.backup
+*.backup.claude/
+Testbed/
+*.log
+*.json
+*.sh

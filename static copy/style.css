@@ -1,0 +1,188 @@
+/* Layout */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.four-column-layout {
+  display: flex;
+  height: 100vh;
+}
+
+.column {
+  width: 25%;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: white;
+  box-sizing: border-box;
+  border-right: 1px solid #ddd;
+}
+
+.sequencer-panel {
+  background-color: #ffffff;
+}
+
+.timeline-panel {
+  background-color: #f8f9fa;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #333;
+}
+
+/* Timeline */
+#timeline-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.timeline-item {
+  background: #ffffff;
+  border: 1px solid #ccc;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #333;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.timeline-arrow {
+  font-size: 1.4em;
+  color: #666;
+}
+
+/* Buttons */
+.icon-btn {
+  background: #444;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.icon-btn.primary {
+  background-color: #007bff;
+}
+
+.icon-btn:hover {
+  opacity: 0.9;
+}
+
+/* Sequence Blocks */
+.sequence-step {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.sequence-step h2 {
+  margin: 0 0 10px;
+  font-size: 1.1em;
+  color: #007bff;
+}
+
+.axis-config {
+  margin-top: 10px;
+  border-left: 3px solid #ddd;
+  padding-left: 15px;
+  margin-bottom: 15px;
+}
+
+.axis-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.axis-header select,
+.axis-header input {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.axis-header .dir-btn {
+  border: 1px solid #ccc;
+  background: #eee;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.axis-header .dir-btn.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.trigger-list {
+  margin-left: 20px;
+  margin-top: 8px;
+}
+
+.trigger-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.trigger-item select,
+.trigger-item input {
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+input.force-small {
+  width: 80px;
+}
+
+.add-trigger-btn {
+  margin-top: 5px;
+  font-size: 0.9em;
+  color: #007bff;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.add-trigger-btn:hover {
+  text-decoration: underline;
+}
+
+.summary-text {
+  margin-top: 12px;
+  padding-top: 10px;
+  font-size: 0.9em;
+  color: #555;
+  border-top: 1px dashed #ccc;
+}

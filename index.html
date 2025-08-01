@@ -11,9 +11,9 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
   
-  <!-- Your existing CSS files -->
-  <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/chart.css">
+  <!-- Your existing CSS files - Updated for GitHub Pages -->
+  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="static/chart.css">
   
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1570,11 +1570,48 @@
         }
       });
       
-      // Initialize motor check status
-      window.motorCheckCompleted = false;
+      // Initialize motor check status - GitHub Pages Demo Mode
+      // Auto-enable demo mode for GitHub Pages deployment
+      const isGitHubPages = window.location.hostname.includes('github.io') || 
+                           window.location.hostname.includes('pages.dev') ||
+                           window.location.pathname.includes('index_git.html');
+      
+      if (isGitHubPages) {
+        console.log('🌐 GitHub Pages detected - enabling demo mode');
+        window.motorCheckCompleted = true;
+        addLogEntry('🌐 Demo Mode: GitHub Pages detected - motor safety bypassed');
+        addLogEntry('✅ Demo Mode: All sequence functions enabled for testing');
+      } else {
+        console.log('🏠 Local deployment detected - standard safety mode');
+        window.motorCheckCompleted = false;
+        addLogEntry('🏠 Local Mode: Motor check required for safety');
+      }
       
       addLogEntry('Professional interface loaded successfully');
-      addLogEntry('⚠️  Please run Motor Check first for safety!');
+      
+      // Auto-enable buttons for GitHub Pages demo mode
+      if (isGitHubPages) {
+        const safetyButtons = ['add-action-x', 'add-action-y', 'add-action-z', 'run-sequence'];
+        safetyButtons.forEach(buttonId => {
+          const button = document.getElementById(buttonId);
+          if (button) {
+            button.disabled = false;
+            button.style.opacity = '1';
+            button.classList.remove('disabled');
+          }
+        });
+        
+        // Enable dropdown functionality immediately
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+        dropdownToggles.forEach(toggle => {
+          toggle.classList.remove('disabled');
+          toggle.style.opacity = '1';
+        });
+        
+        addLogEntry('🎉 Demo Mode Active: All features enabled for GitHub Pages!');
+      } else {
+        addLogEntry('⚠️  Please run Motor Check first for safety!');
+      }
       
       // Motor Unlock - Bypass motor check requirement
       window.motorUnlock = function() {
@@ -1742,21 +1779,21 @@
     });
   </script>
 
-  <!-- Load ES6 modules properly for button functionality -->
+  <!-- Load ES6 modules properly for button functionality - Updated for GitHub Pages -->
   <script type="module">
     // Import and initialize chart panel first
-    import { initChartPanel } from '/static/chartPanel.js';
+    import { initChartPanel } from 'static/chartPanel.js';
     
     // Import socket for connection
-    import { socket } from '/static/socket.js';
+    import { socket } from 'static/socket.js';
     
     // Import utilities and step builder
-    import { sequence, renumberSteps } from '/static/utils.js';
-    import { createMoveStep } from '/static/stepBuilder.js';
-    import { renderTimeline } from '/static/timeline.js';
+    import { sequence, renumberSteps } from 'static/utils.js';
+    import { createMoveStep } from 'static/stepBuilder.js';
+    import { renderTimeline } from 'static/timeline.js';
     
     // Import main module which contains button event listeners
-    import '/static/main.js';
+    import 'static/main.js';
     
     // Make utilities available globally for debugging
     window.sequence = sequence;
@@ -1949,61 +1986,73 @@
       }
     }, 1000);
     
-    // Listen for all log messages and motor check completion
-    socket.on("log", (msg) => {
-      console.log("📨 Received log message:", msg);
-      // Add all server log messages to the UI
-      addLogEntry(msg);
+    // GitHub Pages Demo Mode - Handle socket connections gracefully
+    const isGitHubPages = window.location.hostname.includes('github.io') || 
+                         window.location.hostname.includes('pages.dev') ||
+                         window.location.pathname.includes('index_git.html');
+    
+    if (!isGitHubPages) {
+      // Listen for all log messages and motor check completion (local mode only)
+      socket.on("log", (msg) => {
+        console.log("📨 Received log message:", msg);
+        // Add all server log messages to the UI
+        addLogEntry(msg);
+        
+        // Check for motor check completion to enable safety buttons
+        if (msg.includes("Motor check completed")) {
+          console.log("🔓 Motor check completed - unlocking dropdown system");
+          window.motorCheckCompleted = true;
+          
+          const safetyButtons = ['add-action-x', 'add-action-y', 'add-action-z', 'run-sequence'];
+          safetyButtons.forEach(buttonId => {
+            const button = document.getElementById(buttonId);
+            if (button) {
+              button.disabled = false;
+              button.style.opacity = '1';
+              button.classList.remove('disabled');
+              console.log(`✅ Enabled button: ${buttonId}`);
+            }
+          });
+          
+          // Enable dropdown functionality
+          const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+          dropdownToggles.forEach(toggle => {
+            toggle.classList.remove('disabled');
+            toggle.style.opacity = '1';
+          });
+          
+          addLogEntry('✅ Sequence builder dropdowns unlocked for safe operation!');
+        }
+      });
       
-      // Check for motor check completion to enable safety buttons
-      if (msg.includes("Motor check completed")) {
-        console.log("🔓 Motor check completed - unlocking dropdown system");
-        window.motorCheckCompleted = true;
-        
-        const safetyButtons = ['add-action-x', 'add-action-y', 'add-action-z', 'run-sequence'];
-        safetyButtons.forEach(buttonId => {
-          const button = document.getElementById(buttonId);
-          if (button) {
-            button.disabled = false;
-            button.style.opacity = '1';
-            button.classList.remove('disabled');
-            console.log(`✅ Enabled button: ${buttonId}`);
-          }
-        });
-        
-        // Enable dropdown functionality
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-        dropdownToggles.forEach(toggle => {
-          toggle.classList.remove('disabled');
-          toggle.style.opacity = '1';
-        });
-        
-        addLogEntry('✅ Sequence builder dropdowns unlocked for safe operation!');
-      }
-    });
-    
-    // Add socket connection debugging
-    socket.on("connect", () => {
-      console.log("🔌 Socket connected successfully");
-      addLogEntry("🔌 Socket connected to server");
-    });
-    
-    socket.on("disconnect", () => {
-      console.log("🔌 Socket disconnected");
-      addLogEntry("⚠️ Socket disconnected from server");
-    });
-    
-    socket.on("connect_error", (error) => {
-      console.error("🔌 Socket connection error:", error);
-      addLogEntry("❌ Socket connection error: " + error.message);
-    });
+      // Add socket connection debugging (local mode only)
+      socket.on("connect", () => {
+        console.log("🔌 Socket connected successfully");
+        addLogEntry("🔌 Socket connected to server");
+      });
+      
+      socket.on("disconnect", () => {
+        console.log("🔌 Socket disconnected");
+        addLogEntry("⚠️ Socket disconnected from server");
+      });
+      
+      socket.on("connect_error", (error) => {
+        console.error("🔌 Socket connection error:", error);
+        addLogEntry("❌ Socket connection error: " + error.message);
+      });
+    } else {
+      // GitHub Pages Demo Mode - Skip socket connections
+      console.log("🌐 Demo Mode: Skipping socket connections for GitHub Pages");
+      addLogEntry("🌐 Demo Mode: Running in standalone mode without server");
+      addLogEntry("📶 Demo Mode: Socket connections disabled for GitHub Pages");
+    }
 
     // Test sequence step creation directly
     function testStepCreation() {
       console.log('🧪 Testing step creation...');
       
       // Import createMoveStep dynamically and test
-      import('/static/stepBuilder.js').then(module => {
+      import('static/stepBuilder.js').then(module => {
         console.log('✅ stepBuilder module loaded:', module);
         const { createMoveStep } = module;
         
@@ -2094,9 +2143,9 @@
       console.log('🔗 Manually attaching event handlers...');
       
       Promise.all([
-        import('/static/stepBuilder.js'),
-        import('/static/timeline.js'),
-        import('/static/utils.js')
+        import('static/stepBuilder.js'),
+        import('static/timeline.js'),
+        import('static/utils.js')
       ]).then(([stepBuilderModule, timelineModule, utilsModule]) => {
         const { createMoveStep } = stepBuilderModule;
         const { renderTimeline } = timelineModule;

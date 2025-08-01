@@ -1873,8 +1873,12 @@
           e.preventDefault();
           e.stopPropagation();
           
-          // Check motor safety first
-          if (!window.motorCheckCompleted) {
+          // Check motor safety first (but skip in demo mode)
+          const isGitHubPages = window.location.hostname.includes('github.io') || 
+                               window.location.hostname.includes('pages.dev') ||
+                               window.location.pathname.includes('index_git.html');
+          
+          if (!window.motorCheckCompleted && !isGitHubPages) {
             addLogEntry('⚠️ Motor check required before creating sequence steps');
             console.warn('Motor check not completed - blocking step creation');
             
@@ -1884,6 +1888,8 @@
             menu.previousElementSibling.classList.remove('active');
             return;
           }
+          
+          console.log('✅ Safety check passed - proceeding with step creation');
           
           const axis = item.getAttribute('data-axis');
           const type = item.getAttribute('data-type');
@@ -2237,7 +2243,123 @@
     setTimeout(() => {
       checkMotorStatus();
       forceEnableButtons();
+      
+      // Force initialize dropdowns for GitHub Pages
+      const isGitHubPages = window.location.hostname.includes('github.io') || 
+                           window.location.hostname.includes('pages.dev') ||
+                           window.location.pathname.includes('index_git.html');
+      
+      if (isGitHubPages) {
+        console.log('🌐 GitHub Pages: Force initializing dropdowns...');
+        // Force motor check to true again in case something reset it
+        window.motorCheckCompleted = true;
+        
+        // Enable all safety buttons again
+        const safetyButtons = ['add-action-x', 'add-action-y', 'add-action-z', 'run-sequence'];
+        safetyButtons.forEach(buttonId => {
+          const button = document.getElementById(buttonId);
+          if (button) {
+            button.disabled = false;
+            button.style.opacity = '1';
+            button.classList.remove('disabled');
+            console.log(`🔓 Force enabled: ${buttonId}`);
+          }
+        });
+      }
+      
       initDropdowns(); // Initialize the new dropdown functionality
+      
+      // Add direct fallback button handlers for GitHub Pages
+      if (isGitHubPages) {
+        console.log('🌐 GitHub Pages: Adding direct button handlers...');
+        
+        // Direct X button handler
+        const btnX = document.getElementById('add-action-x');
+        if (btnX) {
+          btnX.addEventListener('click', (e) => {
+            console.log('🔘 Direct X button clicked!');
+            e.preventDefault();
+            e.stopPropagation();
+            
+            try {
+              const sequenceList = document.getElementById('sequence-list');
+              if (sequenceList && window.createMoveStep && window.sequence && window.renderTimeline) {
+                const stepDiv = window.createMoveStep(window.sequence.length, window.renderTimeline, 'X');
+                if (stepDiv) {
+                  sequenceList.appendChild(stepDiv);
+                  const emptyState = document.getElementById('sequence-empty');
+                  if (emptyState) emptyState.classList.add('hidden');
+                  window.renderTimeline();
+                  console.log('✅ Direct X step created successfully');
+                  addLogEntry('✅ X-axis step created via direct handler');
+                }
+              }
+            } catch (error) {
+              console.error('❌ Direct X step creation failed:', error);
+              addLogEntry('❌ Direct X step creation failed: ' + error.message);
+            }
+          });
+        }
+        
+        // Direct Y button handler
+        const btnY = document.getElementById('add-action-y');
+        if (btnY) {
+          btnY.addEventListener('click', (e) => {
+            console.log('🔘 Direct Y button clicked!');
+            e.preventDefault();
+            e.stopPropagation();
+            
+            try {
+              const sequenceList = document.getElementById('sequence-list');
+              if (sequenceList && window.createMoveStep && window.sequence && window.renderTimeline) {
+                const stepDiv = window.createMoveStep(window.sequence.length, window.renderTimeline, 'Y');
+                if (stepDiv) {
+                  sequenceList.appendChild(stepDiv);
+                  const emptyState = document.getElementById('sequence-empty');
+                  if (emptyState) emptyState.classList.add('hidden');
+                  window.renderTimeline();
+                  console.log('✅ Direct Y step created successfully');
+                  addLogEntry('✅ Y-axis step created via direct handler');
+                }
+              }
+            } catch (error) {
+              console.error('❌ Direct Y step creation failed:', error);
+              addLogEntry('❌ Direct Y step creation failed: ' + error.message);
+            }
+          });
+        }
+        
+        // Direct Z button handler
+        const btnZ = document.getElementById('add-action-z');
+        if (btnZ) {
+          btnZ.addEventListener('click', (e) => {
+            console.log('🔘 Direct Z button clicked!');
+            e.preventDefault();
+            e.stopPropagation();
+            
+            try {
+              const sequenceList = document.getElementById('sequence-list');
+              if (sequenceList && window.createMoveStep && window.sequence && window.renderTimeline) {
+                const stepDiv = window.createMoveStep(window.sequence.length, window.renderTimeline, 'Z');
+                if (stepDiv) {
+                  sequenceList.appendChild(stepDiv);
+                  const emptyState = document.getElementById('sequence-empty');
+                  if (emptyState) emptyState.classList.add('hidden');
+                  window.renderTimeline();
+                  console.log('✅ Direct Z step created successfully');
+                  addLogEntry('✅ Z-axis step created via direct handler');
+                }
+              }
+            } catch (error) {
+              console.error('❌ Direct Z step creation failed:', error);
+              addLogEntry('❌ Direct Z step creation failed: ' + error.message);
+            }
+          });
+        }
+        
+        addLogEntry('🌐 GitHub Pages: Direct button handlers added');
+      }
+      
       console.log('✅ All systems initialized - dropdowns should be functional');
       addLogEntry('✅ Professional interface ready - try the dropdown buttons!');
     }, 2000);

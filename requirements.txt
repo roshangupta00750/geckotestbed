@@ -1,0 +1,13 @@
+# Gecko Adhesion Laboratory - Python Dependencies
+# Core web framework
+Flask==2.3.2
+
+# Real-time communication
+Flask-SocketIO==5.3.4
+python-socketio==5.8.0
+
+# Additional utilities (if needed)
+# Uncomment as required:
+# numpy==1.24.3
+# pandas==2.0.3
+# matplotlib==3.7.1

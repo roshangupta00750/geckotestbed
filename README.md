@@ -173,7 +173,7 @@ The interface supports multiple visualization themes:
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under is not licenced as this is developed in Julius Maximillian University, Wurzburg- Germany. 
 
 ## 🐛 Troubleshooting
 

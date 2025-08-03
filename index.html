@@ -1153,24 +1153,106 @@
       }
     }
 
+    /* CRITICAL: Hide ALL mobile-only elements on desktop by default */
+    .mobile-tabs,
+    .mobile-tab,
+    .mobile-tab-content,
+    .mobile-sequence-section,
+    .mobile-sequence-header,
+    .mobile-add-buttons,
+    .mobile-add-btn,
+    .mobile-sequence-controls,
+    .mobile-control-btn,
+    .mobile-panels-row,
+    .mobile-manual-controls,
+    .mobile-axis-controls,
+    .mobile-axis-group,
+    .mobile-axis-label,
+    .mobile-axis-buttons,
+    .mobile-axis-btn {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      position: absolute !important;
+      left: -9999px !important;
+      height: 0 !important;
+      width: 0 !important;
+      overflow: hidden !important;
+    }
+
+    /* Show desktop panels by default */
+    .desktop-panels {
+      display: block !important;
+    }
+
+    /* Additional desktop-only rule */
+    @media (min-width: 769px) {
+      .mobile-tabs,
+      .mobile-tab,
+      .mobile-tab-content,
+      .mobile-sequence-section,
+      .mobile-sequence-header,
+      .mobile-add-buttons,
+      .mobile-add-btn,
+      .mobile-sequence-controls,
+      .mobile-control-btn,
+      .mobile-panels-row {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        position: absolute !important;
+        left: -9999px !important;
+        height: 0 !important;
+        width: 0 !important;
+        overflow: hidden !important;
+      }
+    }
+
     /* Mobile-First Responsive Design */
     @media (max-width: 768px) {
-      /* Enable proper scrolling for mobile */
+      /* ROBUST: Reset everything for mobile - FAIL-SAFE */
+      * {
+        box-sizing: border-box !important;
+      }
+      
+      /* CRITICAL: Prevent any horizontal overflow */
+      *:not(.mobile-tabs):not(.mobile-tab):not(.mobile-tab-content):not(.mobile-sequence-section) {
+        max-width: 100vw !important;
+      }
+      
+      /* CRITICAL: Ensure all containers fit viewport */
+      .mobile-tabs,
+      .mobile-tab-content,
+      .mobile-sequence-section,
+      .mobile-panels-row,
+      .mobile-add-buttons,
+      .mobile-sequence-controls {
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+      }
+      
       html, body {
         overflow-x: hidden;
         overflow-y: auto;
         height: auto;
         min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        width: 100%;
       }
       
-      /* Completely rebuild for mobile */
+      /* ROBUST: Natural scrolling app structure for mobile */
       .app-container {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        height: auto;
-        gap: 0;
-        overflow-y: auto;
+        display: flex !important;
+        flex-direction: column !important;
+        min-height: 100vh !important;
+        height: auto !important;
+        width: 100vw !important;
+        max-width: 100% !important;
+        gap: 0 !important;
+        overflow-x: hidden !important;
+        overflow-y: visible !important;
+        position: relative !important;
       }
       
       /* Mobile Header - Clean and Simple */
@@ -1185,10 +1267,21 @@
       
       .logo {
         font-size: 1.1rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-primary);
+      }
+      
+      .logo i {
+        font-size: 1.3rem;
+        color: var(--primary-accent);
       }
       
       .logo span {
-        display: none; /* Hide full text on mobile */
+        display: inline !important; /* Show title on mobile */
+        font-size: 1rem;
       }
       
       .status-indicator {
@@ -1204,17 +1297,30 @@
         display: none;
       }
       
-      /* Hide complex sidebar completely */
+      /* ROBUST: Completely hide complex sidebar and desktop elements */
       .sidebar {
-        display: none;
+        display: none !important;
+        visibility: hidden !important;
+        position: absolute !important;
+        left: -9999px !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
       }
       
-      /* Mobile Main Area - Full Screen 3D */
+      /* ROBUST: Mobile Main Area - Natural Height 3D View */
       .main-view {
-        flex: 0 0 40vh;
-        position: relative;
-        min-height: 300px;
-        max-height: 40vh;
+        flex: 0 0 auto !important;
+        width: 100vw !important;
+        max-width: 100% !important;
+        position: relative !important;
+        height: 300px !important;
+        min-height: 300px !important;
+        max-height: none !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
       }
       
       /* Simplified Mobile Overlay */
@@ -1280,6 +1386,66 @@
         display: none;
       }
       
+      /* Hide desktop panels on mobile */
+      .desktop-panels {
+        display: none !important;
+      }
+
+      /* CRITICAL: Override ALL hiding properties to show mobile elements on mobile devices */
+      .mobile-tabs,
+      .mobile-tab,
+      .mobile-tab-content,
+      .mobile-sequence-section,
+      .mobile-sequence-header,
+      .mobile-add-buttons,
+      .mobile-add-btn,
+      .mobile-sequence-controls,
+      .mobile-control-btn,
+      .mobile-panels-row,
+      .mobile-manual-controls,
+      .mobile-axis-controls,
+      .mobile-axis-group,
+      .mobile-axis-label,
+      .mobile-axis-buttons,
+      .mobile-axis-btn {
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        left: auto !important;
+        height: auto !important;
+        width: auto !important;
+        overflow: visible !important;
+      }
+
+      /* Set proper display types for mobile elements */
+      .mobile-tabs {
+        display: flex !important;
+      }
+      
+      .mobile-tab-content,
+      .mobile-sequence-section {
+        display: block !important;
+      }
+      
+      .mobile-tab,
+      .mobile-sequence-header,
+      .mobile-add-buttons,
+      .mobile-add-btn,
+      .mobile-sequence-controls,
+      .mobile-control-btn,
+      .mobile-panels-row,
+      .mobile-manual-controls,
+      .mobile-axis-controls,
+      .mobile-axis-group,
+      .mobile-axis-buttons,
+      .mobile-axis-btn {
+        display: flex !important;
+      }
+      
+      .mobile-axis-label {
+        display: block !important;
+      }
+
       /* Mobile Tab Navigation */
       .mobile-tabs {
         display: flex !important;
@@ -1322,30 +1488,46 @@
         background: rgba(255, 255, 255, 0.05);
       }
       
-      /* Mobile Tab Content Container */
+      /* ROBUST: Mobile Tab Content Container - Natural Height */
       .mobile-tab-content {
-        display: none;
-        flex: 1;
-        overflow-y: auto;
-        padding: 1.2rem;
-        min-height: 200px;
+        display: none !important;
+        flex: 0 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+        overflow-y: visible !important;
+        padding: 1.2rem !important;
+        margin: 0 !important;
+        min-height: auto !important;
+        height: auto !important;
+        box-sizing: border-box !important;
+        position: relative !important;
       }
       
       .mobile-tab-content.active {
-        display: block;
+        display: block !important;
       }
 
-      /* Mobile Bottom Panel - Essential Controls Only */
+      /* ROBUST: Mobile Bottom Panel - Natural Height & Scrolling */
       .panels {
-        flex-shrink: 0;
-        height: auto;
-        min-height: 300px;
-        max-height: 60vh;
-        padding: 0;
-        overflow-y: auto;
-        border-top: 2px solid var(--primary-accent);
-        display: flex;
-        flex-direction: column;
+        flex: 0 0 auto !important;
+        width: 100vw !important;
+        max-width: 100% !important;
+        min-height: auto !important;
+        max-height: none !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow-x: hidden !important;
+        overflow-y: visible !important;
+        border-top: 2px solid var(--primary-accent) !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-bottom: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        position: relative !important;
+        box-sizing: border-box !important;
       }
       
       /* Mobile Sequence Builder */
@@ -1397,10 +1579,6 @@
         gap: 0.8rem;
         min-height: 60px;
       }
-
-      .mobile-add-btn i {
-        font-size: 1.2rem;
-      }
       
       .mobile-add-btn:hover {
         background: var(--primary-accent);
@@ -1435,10 +1613,6 @@
         gap: 0.5rem;
         font-weight: 600;
       }
-
-      .mobile-control-btn i {
-        font-size: 1rem;
-      }
       
       .mobile-control-btn.run {
         background: var(--success-accent);
@@ -1451,18 +1625,102 @@
         color: white;
         border-color: var(--danger-accent);
       }
-      
-      /* Mobile Panels Row */
-      .mobile-panels-row {
-        display: flex;
+
+      /* Mobile Manual Motor Controls Styling */
+      .mobile-manual-controls {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--glass-border);
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .mobile-axis-controls {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .mobile-axis-group {
+        flex-direction: column;
         gap: 0.8rem;
+      }
+
+      .mobile-axis-label {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        text-align: center;
+      }
+
+      .mobile-axis-buttons {
+        flex-direction: row;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      .mobile-axis-btn {
         flex: 1;
+        max-width: 120px;
+        padding: 1rem;
+        background: var(--glass-bg);
+        border: 2px solid var(--glass-border);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        min-height: 80px;
+      }
+
+      .mobile-axis-btn i {
+        font-size: 1.5rem;
+        color: var(--primary-accent);
+      }
+
+      .mobile-axis-btn:hover {
+        background: var(--primary-accent);
+        color: white;
+        border-color: var(--primary-accent);
+        transform: translateY(-2px);
+      }
+
+      .mobile-axis-btn:active {
+        transform: scale(0.95);
+        background: var(--secondary-accent);
+      }
+
+      .mobile-axis-btn.pressed {
+        background: var(--secondary-accent);
+        color: white;
+        border-color: var(--secondary-accent);
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+      }
+      
+      /* ROBUST: Mobile Panels Row - Fixed Layout */
+      .mobile-panels-row {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
       }
       
       .mobile-panels-row .panel {
-        flex: 1;
-        padding: 0.8rem;
-        margin-bottom: 0;
+        flex: 0 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 1rem !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
       }
       
       .panel-header {
@@ -1490,32 +1748,48 @@
         font-size: 0.7rem;
       }
       
-      /* Mobile Charts */
+      /* Mobile Charts - Enhanced Visibility */
       .charts-panel-expanded {
-        min-height: auto;
+        min-height: 200px !important;
+        height: auto !important;
+        flex: 0 0 auto !important;
       }
       
       .chart-container-expanded {
-        height: 120px;
+        height: 180px !important;
+        min-height: 180px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
       }
       
-      /* Mobile Logs - Compact */
+      /* Mobile Logs - Enhanced Visibility */
       .logs-panel {
-        flex-shrink: 0;
-        height: 80px;
-        padding: 0.5rem 1rem;
-        border-top: 1px solid var(--glass-border);
+        flex: 0 0 auto !important;
+        height: auto !important;
+        min-height: 120px !important;
+        padding: 1rem !important;
+        margin: 0 !important;
+        border-top: 1px solid var(--glass-border) !important;
+        width: 100vw !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
       }
       
       .logs-header {
-        font-size: 0.8rem;
-        margin-bottom: 0.3rem;
+        font-size: 1rem !important;
+        margin-bottom: 0.8rem !important;
+        font-weight: 600 !important;
       }
       
       .log-container {
-        height: 50px;
-        font-size: 0.7rem;
-        padding: 0.3rem;
+        height: auto !important;
+        min-height: 80px !important;
+        font-size: 0.8rem !important;
+        padding: 0.8rem !important;
+        line-height: 1.4 !important;
+        max-height: 200px !important;
+        overflow-y: auto !important;
       }
     }
     
@@ -1527,7 +1801,17 @@
       }
       
       .logo {
-        font-size: 1rem;
+        font-size: 0.9rem;
+      }
+      
+      .logo span {
+        display: none !important;
+      }
+      
+      .logo::after {
+        content: "Gecko Lab";
+        font-size: 0.9rem;
+        font-weight: 700;
       }
       
       .view-overlay {
@@ -2074,25 +2358,77 @@
       <div class="mobile-tab-content" id="mobile-calibration-tab">
         <div class="mobile-sequence-header">
           <i class="fas fa-cog"></i>
-          <span>Calibration</span>
+          <span>Calibration & Motor Control</span>
         </div>
         <div class="mobile-add-buttons">
-          <button class="mobile-add-btn" onclick="mobileStartCalibration()">
+          <button class="mobile-add-btn" id="mobile-zero-force-sensor">
             <i class="fas fa-balance-scale"></i>
-            <span>Start Calibration</span>
-          </button>
-          <button class="mobile-add-btn" onclick="mobileZeroForce()">
-            <i class="fas fa-crosshairs"></i>
             <span>Zero Force</span>
           </button>
+          <button class="mobile-add-btn" id="mobile-motor-check">
+            <i class="fas fa-cogs"></i>
+            <span>Motor Check</span>
+          </button>
+          <button class="mobile-add-btn" id="mobile-motor-unlock" style="background: #f59e0b; color: white;">
+            <i class="fas fa-unlock-alt"></i>
+            <span>Motor Unlock</span>
+          </button>
+          <button class="mobile-add-btn" id="mobile-apply-calibration" style="background: #10b981; color: white;">
+            <i class="fas fa-check-circle"></i>
+            <span>Apply Calibration</span>
+          </button>
         </div>
-        <div class="mobile-sequence-controls">
-          <button class="mobile-control-btn" onclick="mobileHomeMachine()">
-            <i class="fas fa-home"></i> Home
-          </button>
-          <button class="mobile-control-btn" onclick="mobileResetCalibration()">
-            <i class="fas fa-refresh"></i> Reset
-          </button>
+        
+        <!-- Mobile Manual Motor Controls -->
+        <div class="mobile-manual-controls">
+          <div class="mobile-sequence-header">
+            <i class="fas fa-gamepad"></i>
+            <span>Manual Motor Control</span>
+          </div>
+          
+          <div class="mobile-axis-controls">
+            <div class="mobile-axis-group">
+              <div class="mobile-axis-label">X Axis</div>
+              <div class="mobile-axis-buttons">
+                <button class="mobile-axis-btn" data-axis="X" data-dir="0">
+                  <i class="fas fa-arrow-left"></i>
+                  <span>Left</span>
+                </button>
+                <button class="mobile-axis-btn" data-axis="X" data-dir="1">
+                  <i class="fas fa-arrow-right"></i>
+                  <span>Right</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="mobile-axis-group">
+              <div class="mobile-axis-label">Y Axis</div>
+              <div class="mobile-axis-buttons">
+                <button class="mobile-axis-btn" data-axis="Y" data-dir="0">
+                  <i class="fas fa-arrow-left"></i>
+                  <span>Back</span>
+                </button>
+                <button class="mobile-axis-btn" data-axis="Y" data-dir="1">
+                  <i class="fas fa-arrow-right"></i>
+                  <span>Forward</span>
+                </button>
+              </div>
+            </div>
+            
+            <div class="mobile-axis-group">
+              <div class="mobile-axis-label">Z Axis</div>
+              <div class="mobile-axis-buttons">
+                <button class="mobile-axis-btn" data-axis="Z" data-dir="0">
+                  <i class="fas fa-arrow-down"></i>
+                  <span>Down</span>
+                </button>
+                <button class="mobile-axis-btn" data-axis="Z" data-dir="1">
+                  <i class="fas fa-arrow-up"></i>
+                  <span>Up</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2125,36 +2461,66 @@
           </button>
         </div>
       </div>
-      
-      <!-- Force and Charts Row for Mobile -->
-      <div class="mobile-panels-row">
-        <!-- Force Monitor Panel - Simplified -->
+
+      <!-- DESKTOP ONLY: Original Force Monitor and Charts Panels -->
+      <div class="desktop-panels">
+        <!-- Force Monitor Panel -->
         <div class="panel">
-        <div class="panel-header">
-          <i class="fas fa-bolt"></i>
-          <span>Force Monitor</span>
-        </div>
-        <div class="force-gauge-container">
-          <div class="force-gauge" id="force-gauge">
-            <div class="force-value">
-              <div class="force-main" id="fzTacho">0.00</div>
-              <div class="force-unit">N</div>
+          <div class="panel-header">
+            <i class="fas fa-bolt"></i>
+            <span>Force Monitor</span>
+          </div>
+          <div class="force-gauge-container">
+            <div class="force-gauge" id="desktop-force-gauge">
+              <div class="force-value">
+                <div class="force-main" id="desktop-fzTacho">0.00</div>
+                <div class="force-unit">N</div>
+              </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Live Charts Panel - Expanded -->
+        <div class="panel charts-panel-expanded">
+          <div class="panel-header">
+            <i class="fas fa-chart-line"></i>
+            <span>Live Charts</span>
+          </div>
+          <div class="chart-container-expanded" id="chart-panel">
+            <div id="chart-stack"></div>
           </div>
         </div>
       </div>
 
-      <!-- Live Charts Panel - Expanded -->
-      <div class="panel charts-panel-expanded">
-        <div class="panel-header">
-          <i class="fas fa-chart-line"></i>
-          <span>Live Charts</span>
+      <!-- MOBILE ONLY: Force and Charts Row for Mobile -->
+      <div class="mobile-panels-row">
+        <!-- Force Monitor Panel - Simplified -->
+        <div class="panel">
+          <div class="panel-header">
+            <i class="fas fa-bolt"></i>
+            <span>Force Monitor</span>
+          </div>
+          <div class="force-gauge-container">
+            <div class="force-gauge" id="mobile-force-gauge">
+              <div class="force-value">
+                <div class="force-main" id="mobile-fzTacho">0.00</div>
+                <div class="force-unit">N</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="chart-container-expanded" id="chart-panel">
-          <div id="chart-stack"></div>
+
+        <!-- Live Charts Panel - Expanded -->
+        <div class="panel charts-panel-expanded">
+          <div class="panel-header">
+            <i class="fas fa-chart-line"></i>
+            <span>Live Charts</span>
+          </div>
+          <div class="chart-container-expanded" id="mobile-chart-panel">
+            <div id="mobile-chart-stack"></div>
+          </div>
         </div>
       </div>
-      </div> <!-- Close mobile-panels-row -->
     </aside>
 
     <!-- Fixed Bottom Logs Panel -->
@@ -2289,7 +2655,9 @@
       const buttons = [
         'add-action-x', 'add-action-y', 'add-action-z', 'run-sequence', 'stop-sequence',
         'emergency-stop', 'link-repeat-exp', 'motor-check', 'export-data', 'zero-force-sensor',
-        'downloadBtn', 'motor-unlock', 'apply-calibration'
+        'downloadBtn', 'motor-unlock', 'apply-calibration',
+        // Mobile buttons
+        'mobile-zero-force-sensor', 'mobile-motor-check', 'mobile-motor-unlock', 'mobile-apply-calibration'
       ];
       
       buttons.forEach(buttonId => {
@@ -2579,6 +2947,68 @@
 
     // Make function globally available
     window.switchMobileTab = switchMobileTab;
+
+    // Mobile Motor Control Functions - Connect to desktop functionality
+    function initMobileMotorControls() {
+      // Connect mobile calibration buttons to desktop button functionality
+      const mobileToDesktopMap = {
+        'mobile-zero-force-sensor': 'zero-force-sensor',
+        'mobile-motor-check': 'motor-check',
+        'mobile-motor-unlock': 'motor-unlock',
+        'mobile-apply-calibration': 'apply-calibration'
+      };
+
+      Object.entries(mobileToDesktopMap).forEach(([mobileId, desktopId]) => {
+        const mobileBtn = document.getElementById(mobileId);
+        const desktopBtn = document.getElementById(desktopId);
+        
+        if (mobileBtn && desktopBtn) {
+          mobileBtn.addEventListener('click', () => {
+            // Trigger the desktop button click to maintain same functionality
+            desktopBtn.click();
+            
+            // Visual feedback for mobile button
+            mobileBtn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              mobileBtn.style.transform = '';
+            }, 150);
+          });
+        }
+      });
+
+      // Initialize mobile axis control buttons (manual motor controls)
+      document.querySelectorAll('.mobile-axis-btn[data-axis]').forEach(btn => {
+        const axis = btn.dataset.axis;
+        const dir = btn.dataset.dir;
+        
+        const start = () => {
+          fetch(`/start?axis=${axis}&dir=${dir}`);
+          btn.classList.add('pressed');
+          addLogEntry(`Mobile: ${axis} axis moving ${dir === '1' ? 'forward' : 'backward'}`);
+        };
+        
+        const stop = () => {
+          fetch(`/stop?axis=${axis}`);
+          btn.classList.remove('pressed');
+          addLogEntry(`Mobile: ${axis} axis stopped`);
+        };
+        
+        // Add touch and mouse events for mobile axis buttons
+        btn.addEventListener('mousedown', start);
+        btn.addEventListener('touchstart', start);
+        btn.addEventListener('mouseup', stop);
+        btn.addEventListener('mouseleave', stop);
+        btn.addEventListener('touchend', stop);
+        
+        // Prevent default touch behavior
+        btn.addEventListener('touchstart', (e) => e.preventDefault());
+      });
+    }
+
+    // Initialize mobile motor controls when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(initMobileMotorControls, 1000); // Delay to ensure desktop buttons are ready
+    });
   </script>
 
   <!-- Load ES6 modules properly for button functionality - Updated for GitHub Pages -->

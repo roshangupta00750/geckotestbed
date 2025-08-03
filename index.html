@@ -1272,15 +1272,109 @@
       /* Mobile Bottom Panel - Essential Controls Only */
       .panels {
         flex-shrink: 0;
-        height: 200px;
+        height: 250px;
         padding: 0.8rem;
         overflow-y: auto;
         border-top: 2px solid var(--primary-accent);
         display: flex;
+        flex-direction: column;
         gap: 0.8rem;
       }
       
-      .panel {
+      /* Mobile Sequence Builder */
+      .mobile-sequence-section {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        padding: 0.8rem;
+        margin-bottom: 0.8rem;
+      }
+      
+      .mobile-sequence-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--text-primary);
+        margin-bottom: 0.8rem;
+      }
+      
+      .mobile-sequence-header i {
+        color: var(--primary-accent);
+      }
+      
+      .mobile-add-buttons {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.8rem;
+      }
+      
+      .mobile-add-btn {
+        flex: 1;
+        padding: 0.6rem 0.5rem;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        color: var(--text-primary);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+      }
+      
+      .mobile-add-btn:hover {
+        background: var(--primary-accent);
+        color: white;
+        transform: translateY(-1px);
+      }
+      
+      .mobile-add-btn:active {
+        transform: scale(0.95);
+      }
+      
+      .mobile-sequence-controls {
+        display: flex;
+        gap: 0.5rem;
+      }
+      
+      .mobile-control-btn {
+        flex: 1;
+        padding: 0.5rem;
+        font-size: 0.7rem;
+        border-radius: 6px;
+        border: 1px solid var(--glass-border);
+        background: var(--glass-bg);
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+      }
+      
+      .mobile-control-btn.run {
+        background: var(--success-accent);
+        color: white;
+        border-color: var(--success-accent);
+      }
+      
+      .mobile-control-btn.stop {
+        background: var(--danger-accent);
+        color: white;
+        border-color: var(--danger-accent);
+      }
+      
+      /* Mobile Panels Row */
+      .mobile-panels-row {
+        display: flex;
+        gap: 0.8rem;
+        flex: 1;
+      }
+      
+      .mobile-panels-row .panel {
         flex: 1;
         padding: 0.8rem;
         margin-bottom: 0;
@@ -1842,8 +1936,43 @@
 
     <!-- Right Panels -->
     <aside class="panels">
-      <!-- Force Monitor Panel - Simplified -->
-      <div class="panel">
+      <!-- Mobile Sequence Builder (only visible on mobile) -->
+      <div class="mobile-sequence-section" style="display: none;">
+        <div class="mobile-sequence-header">
+          <i class="fas fa-vial"></i>
+          <span>Sequence Builder</span>
+        </div>
+        <div class="mobile-add-buttons">
+          <button class="mobile-add-btn" onclick="mobileAddStep('X')">
+            <i class="fas fa-plus"></i>
+            <span>X Step</span>
+          </button>
+          <button class="mobile-add-btn" onclick="mobileAddStep('Y')">
+            <i class="fas fa-plus"></i>
+            <span>Y Step</span>
+          </button>
+          <button class="mobile-add-btn" onclick="mobileAddStep('Z')">
+            <i class="fas fa-plus"></i>
+            <span>Z Step</span>
+          </button>
+        </div>
+        <div class="mobile-sequence-controls">
+          <button class="mobile-control-btn run" onclick="mobileRunSequence()">
+            <i class="fas fa-play"></i> Run
+          </button>
+          <button class="mobile-control-btn stop" onclick="mobileStopSequence()">
+            <i class="fas fa-stop"></i> Stop
+          </button>
+          <button class="mobile-control-btn" onclick="mobileClearSequence()">
+            <i class="fas fa-trash"></i> Clear
+          </button>
+        </div>
+      </div>
+      
+      <!-- Force and Charts Row for Mobile -->
+      <div class="mobile-panels-row">
+        <!-- Force Monitor Panel - Simplified -->
+        <div class="panel">
         <div class="panel-header">
           <i class="fas fa-bolt"></i>
           <span>Force Monitor</span>
@@ -1868,6 +1997,7 @@
           <div id="chart-stack"></div>
         </div>
       </div>
+      </div> <!-- Close mobile-panels-row -->
     </aside>
 
     <!-- Fixed Bottom Logs Panel -->

@@ -1269,16 +1269,69 @@
         display: none;
       }
       
+      /* Mobile Tab Navigation */
+      .mobile-tabs {
+        display: flex !important;
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--glass-border);
+        padding: 0;
+        margin: 0;
+        flex-shrink: 0;
+      }
+      
+      .mobile-tab {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.2rem;
+        padding: 0.8rem 0.5rem;
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        border-bottom: 3px solid transparent;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      
+      .mobile-tab i {
+        font-size: 1.2rem;
+        margin-bottom: 0.2rem;
+      }
+      
+      .mobile-tab.active {
+        color: var(--primary-accent);
+        border-bottom-color: var(--primary-accent);
+        background: rgba(99, 102, 241, 0.1);
+      }
+      
+      .mobile-tab:hover:not(.active) {
+        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.05);
+      }
+      
+      /* Mobile Tab Content Container */
+      .mobile-tab-content {
+        display: none;
+        flex: 1;
+        overflow-y: auto;
+        padding: 0.8rem;
+      }
+      
+      .mobile-tab-content.active {
+        display: block;
+      }
+
       /* Mobile Bottom Panel - Essential Controls Only */
       .panels {
         flex-shrink: 0;
         height: 250px;
-        padding: 0.8rem;
-        overflow-y: auto;
+        padding: 0;
+        overflow: hidden;
         border-top: 2px solid var(--primary-accent);
         display: flex;
         flex-direction: column;
-        gap: 0.8rem;
       }
       
       /* Mobile Sequence Builder */
@@ -1936,8 +1989,24 @@
 
     <!-- Right Panels -->
     <aside class="panels">
+      <!-- Mobile Control Tabs (only visible on mobile) -->
+      <div class="mobile-tabs">
+        <div class="mobile-tab active" onclick="switchMobileTab('sequence')">
+          <i class="fas fa-vial"></i>
+          <span>Sequence</span>
+        </div>
+        <div class="mobile-tab" onclick="switchMobileTab('calibration')">
+          <i class="fas fa-cog"></i>
+          <span>Calibration</span>
+        </div>
+        <div class="mobile-tab" onclick="switchMobileTab('data')">
+          <i class="fas fa-database"></i>
+          <span>Data</span>
+        </div>
+      </div>
+
       <!-- Mobile Sequence Builder (only visible on mobile) -->
-      <div class="mobile-sequence-section" style="display: none;">
+      <div class="mobile-tab-content mobile-sequence-section active" id="mobile-sequence-tab">
         <div class="mobile-sequence-header">
           <i class="fas fa-vial"></i>
           <span>Sequence Builder</span>
@@ -1965,6 +2034,62 @@
           </button>
           <button class="mobile-control-btn" onclick="mobileClearSequence()">
             <i class="fas fa-trash"></i> Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Calibration Tab Content -->
+      <div class="mobile-tab-content" id="mobile-calibration-tab">
+        <div class="mobile-sequence-header">
+          <i class="fas fa-cog"></i>
+          <span>Calibration</span>
+        </div>
+        <div class="mobile-add-buttons">
+          <button class="mobile-add-btn" onclick="mobileStartCalibration()">
+            <i class="fas fa-balance-scale"></i>
+            <span>Start Calibration</span>
+          </button>
+          <button class="mobile-add-btn" onclick="mobileZeroForce()">
+            <i class="fas fa-crosshairs"></i>
+            <span>Zero Force</span>
+          </button>
+        </div>
+        <div class="mobile-sequence-controls">
+          <button class="mobile-control-btn" onclick="mobileHomeMachine()">
+            <i class="fas fa-home"></i> Home
+          </button>
+          <button class="mobile-control-btn" onclick="mobileResetCalibration()">
+            <i class="fas fa-refresh"></i> Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Data Management Tab Content -->
+      <div class="mobile-tab-content" id="mobile-data-tab">
+        <div class="mobile-sequence-header">
+          <i class="fas fa-database"></i>
+          <span>Data Management</span>
+        </div>
+        <div class="mobile-add-buttons">
+          <button class="mobile-add-btn" onclick="mobileExportData()">
+            <i class="fas fa-download"></i>
+            <span>Export Data</span>
+          </button>
+          <button class="mobile-add-btn" onclick="mobileStartLogging()">
+            <i class="fas fa-play"></i>
+            <span>Start Logging</span>
+          </button>
+          <button class="mobile-add-btn" onclick="mobileStopLogging()">
+            <i class="fas fa-stop"></i>
+            <span>Stop Logging</span>
+          </button>
+        </div>
+        <div class="mobile-sequence-controls">
+          <button class="mobile-control-btn" onclick="mobileClearData()">
+            <i class="fas fa-trash"></i> Clear Data
+          </button>
+          <button class="mobile-control-btn" onclick="mobileViewCharts()">
+            <i class="fas fa-chart-line"></i> View Charts
           </button>
         </div>
       </div>
@@ -2394,6 +2519,34 @@
         initUI();
       }, 500);
     });
+
+    // Mobile tab switching function
+    function switchMobileTab(tabName) {
+      // Remove active class from all tabs
+      document.querySelectorAll('.mobile-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Remove active class from all tab contents
+      document.querySelectorAll('.mobile-tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      // Add active class to clicked tab
+      const activeTab = document.querySelector(`.mobile-tab[onclick*="${tabName}"]`);
+      if (activeTab) {
+        activeTab.classList.add('active');
+      }
+      
+      // Add active class to corresponding content
+      const activeContent = document.getElementById(`mobile-${tabName}-tab`);
+      if (activeContent) {
+        activeContent.classList.add('active');
+      }
+    }
+
+    // Make function globally available
+    window.switchMobileTab = switchMobileTab;
   </script>
 
   <!-- Load ES6 modules properly for button functionality - Updated for GitHub Pages -->

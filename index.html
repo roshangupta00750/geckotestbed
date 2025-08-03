@@ -11,9 +11,9 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
   
-  <!-- Your existing CSS files -->
-  <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/chart.css">
+  <!-- Your existing CSS files - Updated for GitHub Pages -->
+  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="static/chart.css">
   
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -951,24 +951,386 @@
       }
     }
 
+    /* Enhanced Mobile Responsiveness */
     @media (max-width: 768px) {
       .app-container {
         grid-template-areas: 
           "header"
           "main-view"
-          "panels"
+          "mobile-controls"
           "logs";
         grid-template-columns: 1fr;
-        grid-template-rows: 70px 1fr auto 120px;
+        grid-template-rows: 60px 1fr auto 100px;
+        gap: 0;
       }
       
+      /* Header adjustments for mobile */
+      .header {
+        padding: 0 1rem;
+        height: 60px;
+      }
+      
+      .logo {
+        font-size: 1rem;
+      }
+      
+      .logo i {
+        font-size: 1.2rem;
+      }
+      
+      .status-indicator {
+        display: none; /* Hide on mobile to save space */
+      }
+      
+      .header-controls {
+        gap: 0.5rem;
+      }
+      
+      .theme-toggle {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+      }
+      
+      /* Add mobile menu button */
+      .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+      }
+      
+      .mobile-menu-btn:hover {
+        background: var(--primary-accent);
+        color: white;
+      }
+      
+      /* Show mobile menu button on mobile */
+      .mobile-menu-btn {
+        display: flex !important;
+      }
+      
+      /* Hide sidebar on mobile */
       .sidebar {
         display: none;
       }
       
+      /* Mobile panels become compact controls */
       .panels {
-        max-height: 50vh;
+        grid-area: mobile-controls;
+        max-height: 40vh;
+        padding: 0.8rem;
+        overflow-y: auto;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid var(--glass-border);
+      }
+      
+      /* Mobile panel layout */
+      .panel {
+        margin-bottom: 1rem;
         padding: 1rem;
+      }
+      
+      .panel:last-child {
+        margin-bottom: 0;
+      }
+      
+      /* Force monitor to be smaller on mobile */
+      .force-gauge {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .force-main {
+        font-size: 1.2rem;
+      }
+      
+      .force-unit {
+        font-size: 0.8rem;
+      }
+      
+      /* Charts panel mobile optimization */
+      .charts-panel-expanded {
+        min-height: 200px;
+      }
+      
+      .chart-container-expanded {
+        height: 200px;
+      }
+      
+      /* Main view adjustments */
+      .main-view {
+        position: relative;
+        min-height: 300px;
+      }
+      
+      /* View overlay mobile optimization */
+      .view-overlay {
+        top: 0.8rem;
+        left: 0.8rem;
+        right: 0.8rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+      }
+      
+      .view-controls {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      
+      .control-button {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.8rem;
+      }
+      
+      /* View info mobile layout */
+      .view-info {
+        min-width: unset;
+        padding: 0.8rem;
+      }
+      
+      .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+      }
+      
+      .info-value {
+        font-size: 0.9rem;
+      }
+      
+      /* Manual controls mobile optimization */
+      .manual-controls-stack {
+        gap: 0.5rem;
+      }
+      
+      .axis-control-vertical {
+        padding: 0.4rem 0.6rem;
+      }
+      
+      .axis-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+      }
+      
+      /* Logs panel mobile */
+      .logs-panel {
+        padding: 0.8rem;
+        height: 100px;
+      }
+      
+      .logs-header {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+      
+      .log-container {
+        height: 60px;
+        font-size: 0.7rem;
+        padding: 0.5rem;
+      }
+    }
+    
+    /* Extra small mobile devices */
+    @media (max-width: 480px) {
+      .app-container {
+        grid-template-rows: 50px 1fr auto 80px;
+      }
+      
+      .header {
+        padding: 0 0.5rem;
+        height: 50px;
+      }
+      
+      .logo {
+        font-size: 0.9rem;
+      }
+      
+      .logo span {
+        display: none; /* Hide text on very small screens */
+      }
+      
+      .theme-toggle span {
+        display: none; /* Hide theme text */
+      }
+      
+      .view-overlay {
+        top: 0.5rem;
+        left: 0.5rem;
+        right: 0.5rem;
+      }
+      
+      .view-info {
+        padding: 0.5rem;
+      }
+      
+      .info-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.3rem;
+      }
+      
+      .info-item {
+        padding: 0.3rem;
+      }
+      
+      .info-label {
+        font-size: 0.6rem;
+      }
+      
+      .info-value {
+        font-size: 0.8rem;
+      }
+      
+      .manual-controls-header {
+        font-size: 0.8rem;
+        margin: 0.8rem 0 0.5rem 0;
+      }
+      
+      .axis-control-vertical {
+        padding: 0.3rem 0.4rem;
+      }
+      
+      .axis-label {
+        font-size: 0.7rem;
+        min-width: 35px;
+      }
+      
+      .axis-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+      }
+      
+      .panels {
+        padding: 0.5rem;
+        max-height: 35vh;
+      }
+      
+      .panel {
+        padding: 0.8rem;
+      }
+      
+      .panel-header {
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+      }
+      
+      .force-gauge {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .force-main {
+        font-size: 1rem;
+      }
+      
+      .force-unit {
+        font-size: 0.7rem;
+      }
+      
+      .chart-container-expanded {
+        height: 150px;
+      }
+      
+      .logs-panel {
+        padding: 0.5rem;
+        height: 80px;
+      }
+      
+      .logs-header {
+        font-size: 0.8rem;
+        margin-bottom: 0.3rem;
+      }
+      
+      .log-container {
+        height: 50px;
+        font-size: 0.65rem;
+        padding: 0.3rem;
+      }
+    }
+    
+    /* Landscape mobile orientation */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .app-container {
+        grid-template-areas: 
+          "header header"
+          "main-view mobile-controls"
+          "logs logs";
+        grid-template-columns: 1fr 300px;
+        grid-template-rows: 50px 1fr 80px;
+      }
+      
+      .panels {
+        max-height: unset;
+        height: 100%;
+      }
+      
+      .view-overlay {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      
+      .view-info {
+        max-width: 200px;
+      }
+      
+      .manual-controls-stack {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      
+      .axis-control-vertical {
+        flex: 1;
+        min-width: 80px;
+        margin: 0 0.2rem;
+      }
+    }
+    
+    /* Touch-friendly enhancements for mobile */
+    @media (max-width: 768px) {
+      /* Increase touch targets */
+      button, .nav-btn, .control-button, .axis-btn {
+        min-height: 44px;
+        min-width: 44px;
+      }
+      
+      /* Better touch feedback */
+      button:active, .nav-btn:active, .control-button:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+      }
+      
+      /* Improve readability on mobile */
+      body {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      
+      /* Better scrolling on mobile panels */
+      .panels {
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .nav-content {
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .sequence-list {
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      /* Mobile-friendly chart scrolling */
+      .chart-container-expanded #chart-stack {
+        -webkit-overflow-scrolling: touch;
       }
     }
 
@@ -1115,6 +1477,9 @@
           <div class="status-dot"></div>
           <span>System Online</span>
         </div>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" style="display: none;">
+          <i class="fas fa-bars" id="mobile-menu-icon"></i>
+        </button>
         <button class="theme-toggle" onclick="toggleTheme()">
           <i class="fas fa-sun" id="theme-icon"></i>
           <span id="theme-text">Light</span>
@@ -1570,11 +1935,48 @@
         }
       });
       
-      // Initialize motor check status
-      window.motorCheckCompleted = false;
+      // Initialize motor check status - GitHub Pages Demo Mode
+      // Auto-enable demo mode for GitHub Pages deployment
+      const isGitHubPages = window.location.hostname.includes('github.io') || 
+                           window.location.hostname.includes('pages.dev') ||
+                           window.location.pathname.includes('index_git.html');
+      
+      if (isGitHubPages) {
+        console.log('🌐 GitHub Pages detected - enabling demo mode');
+        window.motorCheckCompleted = true;
+        addLogEntry('🌐 Demo Mode: GitHub Pages detected - motor safety bypassed');
+        addLogEntry('✅ Demo Mode: All sequence functions enabled for testing');
+      } else {
+        console.log('🏠 Local deployment detected - standard safety mode');
+        window.motorCheckCompleted = false;
+        addLogEntry('🏠 Local Mode: Motor check required for safety');
+      }
       
       addLogEntry('Professional interface loaded successfully');
-      addLogEntry('⚠️  Please run Motor Check first for safety!');
+      
+      // Auto-enable buttons for GitHub Pages demo mode
+      if (isGitHubPages) {
+        const safetyButtons = ['add-action-x', 'add-action-y', 'add-action-z', 'run-sequence'];
+        safetyButtons.forEach(buttonId => {
+          const button = document.getElementById(buttonId);
+          if (button) {
+            button.disabled = false;
+            button.style.opacity = '1';
+            button.classList.remove('disabled');
+          }
+        });
+        
+        // Enable dropdown functionality immediately
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+        dropdownToggles.forEach(toggle => {
+          toggle.classList.remove('disabled');
+          toggle.style.opacity = '1';
+        });
+        
+        addLogEntry('🎉 Demo Mode Active: All features enabled for GitHub Pages!');
+      } else {
+        addLogEntry('⚠️  Please run Motor Check first for safety!');
+      }
       
       // Motor Unlock - Bypass motor check requirement
       window.motorUnlock = function() {
@@ -1718,6 +2120,15 @@
       addLogEntry('Animation toggle requested');
     }
 
+    function toggleMobileMenu() {
+      // For now, just provide feedback - could expand to show mobile controls panel
+      const panels = document.querySelector('.panels');
+      if (panels) {
+        panels.scrollIntoView({ behavior: 'smooth' });
+        addLogEntry('Mobile menu: Scrolled to controls');
+      }
+    }
+
     // Initialize when DOM is ready
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
@@ -1742,21 +2153,21 @@
     });
   </script>
 
-  <!-- Load ES6 modules properly for button functionality -->
+  <!-- Load ES6 modules properly for button functionality - Updated for GitHub Pages -->
   <script type="module">
     // Import and initialize chart panel first
-    import { initChartPanel } from '/static/chartPanel.js';
+    import { initChartPanel } from 'static/chartPanel.js';
     
     // Import socket for connection
-    import { socket } from '/static/socket.js';
+    import { socket } from 'static/socket.js';
     
     // Import utilities and step builder
-    import { sequence, renumberSteps } from '/static/utils.js';
-    import { createMoveStep } from '/static/stepBuilder.js';
-    import { renderTimeline } from '/static/timeline.js';
+    import { sequence, renumberSteps } from 'static/utils.js';
+    import { createMoveStep } from 'static/stepBuilder.js';
+    import { renderTimeline } from 'static/timeline.js';
     
     // Import main module which contains button event listeners
-    import '/static/main.js';
+    import 'static/main.js';
     
     // Make utilities available globally for debugging
     window.sequence = sequence;
@@ -1836,8 +2247,12 @@
           e.preventDefault();
           e.stopPropagation();
           
-          // Check motor safety first
-          if (!window.motorCheckCompleted) {
+          // Check motor safety first (but skip in demo mode)
+          const isGitHubPages = window.location.hostname.includes('github.io') || 
+                               window.location.hostname.includes('pages.dev') ||
+                               window.location.pathname.includes('index_git.html');
+          
+          if (!window.motorCheckCompleted && !isGitHubPages) {
             addLogEntry('⚠️ Motor check required before creating sequence steps');
             console.warn('Motor check not completed - blocking step creation');
             
@@ -1847,6 +2262,8 @@
             menu.previousElementSibling.classList.remove('active');
             return;
           }
+          
+          console.log('✅ Safety check passed - proceeding with step creation');
           
           const axis = item.getAttribute('data-axis');
           const type = item.getAttribute('data-type');
@@ -1949,61 +2366,73 @@
       }
     }, 1000);
     
-    // Listen for all log messages and motor check completion
-    socket.on("log", (msg) => {
-      console.log("📨 Received log message:", msg);
-      // Add all server log messages to the UI
-      addLogEntry(msg);
+    // GitHub Pages Demo Mode - Handle socket connections gracefully
+    const isGitHubPages = window.location.hostname.includes('github.io') || 
+                         window.location.hostname.includes('pages.dev') ||
+                         window.location.pathname.includes('index_git.html');
+    
+    if (!isGitHubPages) {
+      // Listen for all log messages and motor check completion (local mode only)
+      socket.on("log", (msg) => {
+        console.log("📨 Received log message:", msg);
+        // Add all server log messages to the UI
+        addLogEntry(msg);
+        
+        // Check for motor check completion to enable safety buttons
+        if (msg.includes("Motor check completed")) {
+          console.log("🔓 Motor check completed - unlocking dropdown system");
+          window.motorCheckCompleted = true;
+          
+          const safetyButtons = ['add-action-x', 'add-action-y', 'add-action-z', 'run-sequence'];
+          safetyButtons.forEach(buttonId => {
+            const button = document.getElementById(buttonId);
+            if (button) {
+              button.disabled = false;
+              button.style.opacity = '1';
+              button.classList.remove('disabled');
+              console.log(`✅ Enabled button: ${buttonId}`);
+            }
+          });
+          
+          // Enable dropdown functionality
+          const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+          dropdownToggles.forEach(toggle => {
+            toggle.classList.remove('disabled');
+            toggle.style.opacity = '1';
+          });
+          
+          addLogEntry('✅ Sequence builder dropdowns unlocked for safe operation!');
+        }
+      });
       
-      // Check for motor check completion to enable safety buttons
-      if (msg.includes("Motor check completed")) {
-        console.log("🔓 Motor check completed - unlocking dropdown system");
-        window.motorCheckCompleted = true;
-        
-        const safetyButtons = ['add-action-x', 'add-action-y', 'add-action-z', 'run-sequence'];
-        safetyButtons.forEach(buttonId => {
-          const button = document.getElementById(buttonId);
-          if (button) {
-            button.disabled = false;
-            button.style.opacity = '1';
-            button.classList.remove('disabled');
-            console.log(`✅ Enabled button: ${buttonId}`);
-          }
-        });
-        
-        // Enable dropdown functionality
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-        dropdownToggles.forEach(toggle => {
-          toggle.classList.remove('disabled');
-          toggle.style.opacity = '1';
-        });
-        
-        addLogEntry('✅ Sequence builder dropdowns unlocked for safe operation!');
-      }
-    });
-    
-    // Add socket connection debugging
-    socket.on("connect", () => {
-      console.log("🔌 Socket connected successfully");
-      addLogEntry("🔌 Socket connected to server");
-    });
-    
-    socket.on("disconnect", () => {
-      console.log("🔌 Socket disconnected");
-      addLogEntry("⚠️ Socket disconnected from server");
-    });
-    
-    socket.on("connect_error", (error) => {
-      console.error("🔌 Socket connection error:", error);
-      addLogEntry("❌ Socket connection error: " + error.message);
-    });
+      // Add socket connection debugging (local mode only)
+      socket.on("connect", () => {
+        console.log("🔌 Socket connected successfully");
+        addLogEntry("🔌 Socket connected to server");
+      });
+      
+      socket.on("disconnect", () => {
+        console.log("🔌 Socket disconnected");
+        addLogEntry("⚠️ Socket disconnected from server");
+      });
+      
+      socket.on("connect_error", (error) => {
+        console.error("🔌 Socket connection error:", error);
+        addLogEntry("❌ Socket connection error: " + error.message);
+      });
+    } else {
+      // GitHub Pages Demo Mode - Skip socket connections
+      console.log("🌐 Demo Mode: Skipping socket connections for GitHub Pages");
+      addLogEntry("🌐 Demo Mode: Running in standalone mode without server");
+      addLogEntry("📶 Demo Mode: Socket connections disabled for GitHub Pages");
+    }
 
     // Test sequence step creation directly
     function testStepCreation() {
       console.log('🧪 Testing step creation...');
       
       // Import createMoveStep dynamically and test
-      import('/static/stepBuilder.js').then(module => {
+      import('static/stepBuilder.js').then(module => {
         console.log('✅ stepBuilder module loaded:', module);
         const { createMoveStep } = module;
         
@@ -2094,9 +2523,9 @@
       console.log('🔗 Manually attaching event handlers...');
       
       Promise.all([
-        import('/static/stepBuilder.js'),
-        import('/static/timeline.js'),
-        import('/static/utils.js')
+        import('static/stepBuilder.js'),
+        import('static/timeline.js'),
+        import('static/utils.js')
       ]).then(([stepBuilderModule, timelineModule, utilsModule]) => {
         const { createMoveStep } = stepBuilderModule;
         const { renderTimeline } = timelineModule;
@@ -2188,7 +2617,123 @@
     setTimeout(() => {
       checkMotorStatus();
       forceEnableButtons();
+      
+      // Force initialize dropdowns for GitHub Pages
+      const isGitHubPages = window.location.hostname.includes('github.io') || 
+                           window.location.hostname.includes('pages.dev') ||
+                           window.location.pathname.includes('index_git.html');
+      
+      if (isGitHubPages) {
+        console.log('🌐 GitHub Pages: Force initializing dropdowns...');
+        // Force motor check to true again in case something reset it
+        window.motorCheckCompleted = true;
+        
+        // Enable all safety buttons again
+        const safetyButtons = ['add-action-x', 'add-action-y', 'add-action-z', 'run-sequence'];
+        safetyButtons.forEach(buttonId => {
+          const button = document.getElementById(buttonId);
+          if (button) {
+            button.disabled = false;
+            button.style.opacity = '1';
+            button.classList.remove('disabled');
+            console.log(`🔓 Force enabled: ${buttonId}`);
+          }
+        });
+      }
+      
       initDropdowns(); // Initialize the new dropdown functionality
+      
+      // Add direct fallback button handlers for GitHub Pages
+      if (isGitHubPages) {
+        console.log('🌐 GitHub Pages: Adding direct button handlers...');
+        
+        // Direct X button handler
+        const btnX = document.getElementById('add-action-x');
+        if (btnX) {
+          btnX.addEventListener('click', (e) => {
+            console.log('🔘 Direct X button clicked!');
+            e.preventDefault();
+            e.stopPropagation();
+            
+            try {
+              const sequenceList = document.getElementById('sequence-list');
+              if (sequenceList && window.createMoveStep && window.sequence && window.renderTimeline) {
+                const stepDiv = window.createMoveStep(window.sequence.length, window.renderTimeline, 'X');
+                if (stepDiv) {
+                  sequenceList.appendChild(stepDiv);
+                  const emptyState = document.getElementById('sequence-empty');
+                  if (emptyState) emptyState.classList.add('hidden');
+                  window.renderTimeline();
+                  console.log('✅ Direct X step created successfully');
+                  addLogEntry('✅ X-axis step created via direct handler');
+                }
+              }
+            } catch (error) {
+              console.error('❌ Direct X step creation failed:', error);
+              addLogEntry('❌ Direct X step creation failed: ' + error.message);
+            }
+          });
+        }
+        
+        // Direct Y button handler
+        const btnY = document.getElementById('add-action-y');
+        if (btnY) {
+          btnY.addEventListener('click', (e) => {
+            console.log('🔘 Direct Y button clicked!');
+            e.preventDefault();
+            e.stopPropagation();
+            
+            try {
+              const sequenceList = document.getElementById('sequence-list');
+              if (sequenceList && window.createMoveStep && window.sequence && window.renderTimeline) {
+                const stepDiv = window.createMoveStep(window.sequence.length, window.renderTimeline, 'Y');
+                if (stepDiv) {
+                  sequenceList.appendChild(stepDiv);
+                  const emptyState = document.getElementById('sequence-empty');
+                  if (emptyState) emptyState.classList.add('hidden');
+                  window.renderTimeline();
+                  console.log('✅ Direct Y step created successfully');
+                  addLogEntry('✅ Y-axis step created via direct handler');
+                }
+              }
+            } catch (error) {
+              console.error('❌ Direct Y step creation failed:', error);
+              addLogEntry('❌ Direct Y step creation failed: ' + error.message);
+            }
+          });
+        }
+        
+        // Direct Z button handler
+        const btnZ = document.getElementById('add-action-z');
+        if (btnZ) {
+          btnZ.addEventListener('click', (e) => {
+            console.log('🔘 Direct Z button clicked!');
+            e.preventDefault();
+            e.stopPropagation();
+            
+            try {
+              const sequenceList = document.getElementById('sequence-list');
+              if (sequenceList && window.createMoveStep && window.sequence && window.renderTimeline) {
+                const stepDiv = window.createMoveStep(window.sequence.length, window.renderTimeline, 'Z');
+                if (stepDiv) {
+                  sequenceList.appendChild(stepDiv);
+                  const emptyState = document.getElementById('sequence-empty');
+                  if (emptyState) emptyState.classList.add('hidden');
+                  window.renderTimeline();
+                  console.log('✅ Direct Z step created successfully');
+                  addLogEntry('✅ Z-axis step created via direct handler');
+                }
+              }
+            } catch (error) {
+              console.error('❌ Direct Z step creation failed:', error);
+              addLogEntry('❌ Direct Z step creation failed: ' + error.message);
+            }
+          });
+        }
+        
+        addLogEntry('🌐 GitHub Pages: Direct button handlers added');
+      }
+      
       console.log('✅ All systems initialized - dropdowns should be functional');
       addLogEntry('✅ Professional interface ready - try the dropdown buttons!');
     }, 2000);
